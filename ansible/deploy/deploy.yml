@@ -13,7 +13,7 @@
     ansistrano_deploy_to: "{{ deploy_to }}"
     ansistrano_keep_releases: 3
     ansistrano_deploy_via: "git"
-    ansistrano_git_repo: git@github.com:DrakoFormation/DrakoFormation.git
+    ansistrano_git_repo: git@github.com:DrakoFormation/cours.git
     ansistrano_git_identity_key_path: "{{ playbook_dir }}/keys/id_rsa"
     ansistrano_allow_anonymous_stats: false
     ansistrano_remove_rolled_back: yes
