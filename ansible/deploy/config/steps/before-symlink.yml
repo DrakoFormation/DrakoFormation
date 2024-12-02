@@ -1,7 +1,7 @@
 ---
 - name: build project
   shell: chdir={{ansistrano_release_path.stdout}}
-    npm install && npm run docs:build
+    npm install && npm run build
 
 #- name: Ensure www-data group on every releases
 #  file:
