@@ -1,6 +1,0 @@
----
-- name: Ensure writable permissions on identity key
-  file:
-    path: '{{ deploy_to }}/git_identity_key'
-    state: file
-    mode: ug+rw
