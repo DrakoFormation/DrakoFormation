@@ -1,3 +1,7 @@
+---
+date: 2021-02-05
+---
+
 # Liste des cours
 
 Ce site a été créé par [Rémi Jarjat](https://www.drakona.fr/cv/CV_Remi-Jarjat.pdf), pour être utilisé dans le cadre de formations avec [Human Booster](https://humanbooster.com/)

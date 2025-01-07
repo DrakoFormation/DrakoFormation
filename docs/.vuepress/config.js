@@ -3,6 +3,8 @@ import { defineUserConfig } from 'vuepress/cli'
 import { viteBundler } from '@vuepress/bundler-vite'
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 import { componentsPlugin } from "vuepress-plugin-components";
+import { markdownExtPlugin } from '@vuepress/plugin-markdown-ext';
+import { appendDatePlugin } from '@vuepress/plugin-append-date';
 
 export default defineUserConfig({
   lang: 'fr-FR',
@@ -150,14 +152,17 @@ export default defineUserConfig({
     mdEnhancePlugin({
       // Enable mermaid
       mermaid: true,
-      footnote: true,
-      tasklist: true,
-      component: true,
     }),
     componentsPlugin({
       components: [
         'VidStack'
       ]
     }),
+    markdownExtPlugin({
+      footnote: true,
+      component: true,
+      tasklist: true,
+    }),
+    appendDatePlugin(),
   ]
 })
