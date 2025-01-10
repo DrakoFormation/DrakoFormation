@@ -51,49 +51,111 @@ Souvent, nos réalisations vont devoir être vérifiés par plusieurs personnes,
 
 Ensuite vient la mise en production, c'est-à-dire mettre la dernière version à disposition des clients finaux de l'application.
 
-Toutes ces étapes nécessitent un déploiement sur un environnement différent, d'où la nécessité d'avoir un processus fixe.
+Toutes ces étapes nécessitent un déploiement sur un environnement différent, d'où la nécessité d'avoir un processus constant, incluant **simplement** les variations liées aux environnements.
 
-De la même manière, ces différents environnements ne vont pas présenter exactement les mêmes développements (ou même tickets) en même temps. Ce qui implique une méthodologie de travail, pour s'y retrouver.
+De la même manière, ces différents environnements vont présenter exactement différents états (tickets, branches, versions, etc.) en même temps. Ce qui implique une méthodologie de travail plus générale, pour s'y retrouver.
 
-## FTP, SCP et SSH
+## <abbr title="File Transfert Protocol">FTP</abbr>
 
+Un moyen simple, basique, est de déplacer les fichiers sur le serveur, *via* une interface graphique, telle que [FileZilla](https://filezilla-project.org/download.php?show_all=1), ou en ligne de commande. Il sert également à récupérer des fichiers sur le même serveur, ce qui peut permettre de partager le travail entre plusieurs ordinateurs en utilisant le serveur comme "base".
 
-### Déploiement par FTP
+Pour des sites composés uniquement de fichiers HTML, CSS et JavaScript, c'est une méthode simple et efficace ! 
 
-En vidéo :
+Le <abbr title="File Transfert Protocol">FTP</abbr> est un protocole de transfert de fichiers, permettant de se connecter à un serveur pour mettre en ligne des fichiers ou en récupérer depuis un serveur.
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/c66268b37c624ca6a801362cb87b9bd0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-
-Le FTP est un protocole de transfert de fichiers, permettant de se connecter à un serveur pour mettre en ligne des fichiers ou en récupérer depuis un serveur. Il peut s'utiliser en ligne de commande, ou en utilisant des interfaces graphiques, comme [FileZilla](https://filezilla-project.org/download.php?show_all=1).
-
-Il est très utile pour les sites simples (HTML, JS, CSS), ne nécessitant pas de lancer des commandes sur le serveur ou si le serveur n'offre pas d'accès SSH.
-
-Pour déployer un site en FTP, nous avons besoin : 
+Pour déployer un site en <abbr title="File Transfert Protocol">FTP</abbr>, nous avons besoin :
 - de l'adresse du site (IP ou nom de domaine)
 - d'un port à utiliser
 - d'un identifiant et d'un mot de passe **ou** d'une clé SSH valide (ajoutée au serveur)
-- de [FileZilla](https://filezilla-project.org/download.php?show_all=1) ou d'un outil de FTP équivalent.
+- de [FileZilla](https://filezilla-project.org/download.php?show_all=1) ou d'un outil de <abbr title="File Transfert Protocol">FTP</abbr> équivalent.
 
-### Configurer FileZilla
+Quelques [exemples de déploiement par <abbr title="File Transfert Protocol">FTP</abbr> sont disponibles dans la page suivante](05-ftp.md).
 
-Les options par défaut de FileZilla font en général très bien l'affaire, si bien que nous avons seulement besoin de configurer l'accès à notre site.
+### Avantages de <abbr title="File Transfert Protocol">FTP</abbr>
 
-Pour cela, ouvrez le gestionnaire de sites (`Fichiers > Gestionnaire de sites...` ou le bouton "Gestionnaire de sites" en haut à gauche) et entrez les informations requises.
+- Très rapide à prendre en main
+- Les hébergements les moins chers le permettent toujours
+- Rien de plus efficace pour des sites simples (HTML, CSS, JS et même PHP)
 
-![](./img/filezilla-new-site.png)
+### Inconvénients de <abbr title="File Transfert Protocol">FTP</abbr>
 
-- Protocole : FTP ou SFTP sont les deux options les plus courantes (nous allons choisir SFTP)
-- Hôte : adresse IP ou nom de domaine fourni par l'hébergeur
-- Chiffrement (apparait si connexion FTP) : vous permet de dire comment chiffrer la connexion (à voir selon l'hébergement)
-- Type d'authentification : je vous recommande `Normale` (qui permet de retenir identifiant **et** mot de passe)
+- Pose des problèmes pour la gestion de version (et le travail collaboratif)
+- Plus difficilement automatisable (mais [loin d'être infaisable, des outils existent](https://github.com/banago/PHPloy))
+- Pas ou peu utilisable avec des frameworks comme Symfony ou Angular (besoin de lancer des commandes)
+- La complexité du déploiement augmente avec la quantité de dossiers / fichiers
 
-Une fois les informations entrées, plus qu'à cliquer sur `Connexion` pour tester et parcourir les fichiers.
+## <abbr title="Secure Shell">SSH</abbr>
 
-### Transférer des fichiers
+> Secure Shell (SSH) est un protocole de communication sécurisé. Le protocole de connexion impose un échange de clés de chiffrement en début de connexion. Par la suite, tous les segments TCP sont authentifiés et chiffrés.
+>
+> -- <cite>[Wikipedia](https://fr.wikipedia.org/wiki/Secure_Shell)</cite>
 
-Cette partie est très simple, il suffit de déplacer les fichiers d'un côté de l'interface à l'autre.
+On parle souvent de connexion SSH pour l'établissement d'une connexion avec un serveur distant (en général, une machine Linux). Cette connexion permet d'interagir avec cette machine *via* son terminal. 
 
+Pour établir la connexion, des échanges de clés SSH et/ou de mots de passe ont lieu pour valider l'identité de la personne qui se connecte **et** du serveur.
 
-## Exemple pratique
+Exemple de clé publique qui est envoyée : 
 
-[Wordpress](./10-wordpress.md)
+```
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIZSiXTcNWfFcq1vTzhvBylpaVOjNStXHb0lNSZ2zoXrDDHvHpMUuulsLJl4gpYJzqC2eCRigl9tGDdz25/RRZtzU5TJfw90bVl5cB5SxImNWZdE7g78PhoO+niEj1vcgkmh27805BvdBeSE1yVVdIt0ZexwwiKqdZmLNs66DRVC/YE9LP0CBaWmNANx1FZAoAvU1U1AJhPL9sax5xPg4hHNdAjGXusTQRyew67GcLL/ACqyX4Q81tm9QphJipfD4n7Ska318dj8ARhRTge/M4n2eIcI1RRkkDbuklMCM3mZ10oGD+Pc8gRl+RLafHL27JEWK4Ty4T7ArE0mOgsFoxZWQCcWrp08eMhviMKzNQQnuHawjpKhDGA8HbC/GfSoldOprORmp6lqbLJ32qqU0kuVhmjLdb0qH3XXfK97yHqm8G92gA1f6ACE4rsbJ5XtMbZO/7Yr6oJykJ4LYuk7NqRmhF4bRVKwL/MbOS8egIEq8xBcgGC+SSD8m54u8vWAk= remi@KUbuntu-Home
+```
+
+Exemple de clé privée qui n'est jamais envoyée :
+
+```
+-----BEGIN OPENSSH PRIVATE KEY-----
+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
+-----END OPENSSH PRIVATE KEY-----
+```
+
+### Avantages
+
+- Possibilité de lancer des commandes (donc plus de possibilités)
+- Très automatisable
+- En général, plus sécurisé (gestion des accès par clé SSH)
+
+### Inconvénients
+
+- Tous les hébergements ne le permettent pas
+- Gestion des accès plus ou moins aisée
+
+### <abbr title="Secure Copy">SCP</abbr> / RSync / SFTP
+
+Ces outils permettant de communiquer avec un serveur *via* <abbr title="Secure Shell">SSH</abbr> et de transmettre des fichiers.
+
+<abbr title="Secure Copy">SCP</abbr> permet de copier des fichiers / dossiers (dans un sens ou dans l'autre), alors que RSync permet de Synchroniser des dossiers (transferts dans les deux sens simultanément).

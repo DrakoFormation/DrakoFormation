@@ -135,6 +135,7 @@ export default defineUserConfig({
         collapsible: true,
         children: [
           '00-intro',
+          '05-ftp',
           '10-wordpress',
           '20-git',
           '21-github-pages',
