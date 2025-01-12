@@ -8,7 +8,7 @@ import { appendDatePlugin } from '@vuepress/plugin-append-date';
 
 export default defineUserConfig({
   lang: 'fr-FR',
-
+  base: '/cours/', 
   title: 'Cours de Rémi Jarjat',
   description: 'Les formations de Rémi Jarjat pour Human Booster',
 
