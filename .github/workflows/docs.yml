@@ -1,4 +1,5 @@
 name: docs
+permissions: write-all
 
 on:
   # trigger deployment on every push to main branch
